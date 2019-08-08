@@ -47,16 +47,9 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - test:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - build:
           requires:
             - lint
-            - test
           filters:
             tags:
               only: /^v.*/
