@@ -9,6 +9,7 @@ import (
 	"github.com/mattermost/mattermost-server/plugin"
 )
 
+// Chuck is the strong struct to hold chuck norris
 type Chuck struct {
 	IconURL string `json:"icon_url,omitempty"`
 	ID      string `json:"id,omitempty"`
@@ -25,6 +26,7 @@ func getCommand() *model.Command {
 	}
 }
 
+// ExecuteCommand execute the slash command
 func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*model.CommandResponse, *model.AppError) {
 	resp, err := makeRequest("GET", "https://api.chucknorris.io/jokes/random", nil)
 	if err != nil {
@@ -45,7 +47,7 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 			Message:   "Looks like even Chuck Norris fail, API server is down or anyother issue",
 		}
 
-		p.CreateBotPost(chuckPost)
+		p.createBotPost(chuckPost)
 		return &model.CommandResponse{}, nil
 	}
 
@@ -55,7 +57,7 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 		Message:   ">" + chuckFact.Value,
 	}
 
-	p.CreateBotPost(chuckPost)
+	p.createBotPost(chuckPost)
 
 	return &model.CommandResponse{}, nil
 }
@@ -68,7 +70,7 @@ func getCommandResponse(responseType, text string) *model.CommandResponse {
 	}
 }
 
-func (p *Plugin) CreateBotPost(post *model.Post) (*model.Post, *model.AppError) {
+func (p *Plugin) createBotPost(post *model.Post) (*model.Post, *model.AppError) {
 	created, err := p.API.CreatePost(post)
 	if err != nil {
 		p.API.LogError("Couldn't send bot message", "err", err)

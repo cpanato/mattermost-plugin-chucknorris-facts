@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	BOT_USER_KEY = "ChuckNorrisFactsBot"
+	// BotUserKey the chuck name :)
+	BotUserKey = "ChuckNorrisFactsBot"
 )
 
 func main() {
