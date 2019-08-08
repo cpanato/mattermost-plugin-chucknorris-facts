@@ -1,4 +1,4 @@
-# Chuck Norris Facts Plugin for Mattermost ![CircleCI branch](https://img.shields.io/circleci/project/github/cpanato/mattermost-plugin-chucknorris-facts/master.svg)
+# Chuck Norris Facts Plugin for Mattermost [![CircleCI](https://circleci.com/gh/cpanato/mattermost-plugin-chucknorris-facts.svg?style=svg)](https://circleci.com/gh/cpanato/mattermost-plugin-chucknorris-facts)
 
 This plugin post chuck norris facts using the https://api.chucknorris.io/ api.
 
