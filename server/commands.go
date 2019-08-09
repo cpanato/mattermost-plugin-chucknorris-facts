@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/mattermost/mattermost-server/model"
 	"github.com/mattermost/mattermost-server/plugin"
@@ -28,7 +30,23 @@ func getCommand() *model.Command {
 
 // ExecuteCommand execute the slash command
 func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*model.CommandResponse, *model.AppError) {
-	resp, err := makeRequest("GET", "https://api.chucknorris.io/jokes/random", nil)
+
+	chuckCategories := []string{
+		"animal",
+		"career",
+		"dev",
+		"fashion",
+		"food",
+		"money",
+		"movie",
+		"music",
+		"science",
+		"sport",
+		"travel",
+	}
+
+	chuckURL := fmt.Sprintf("https://api.chucknorris.io/jokes/random?category=%s", strings.Join(chuckCategories, ","))
+	resp, err := makeRequest("GET", chuckURL, nil)
 	if err != nil {
 		return &model.CommandResponse{}, model.NewAppError("", "", nil, err.Error(), http.StatusInternalServerError)
 	}
