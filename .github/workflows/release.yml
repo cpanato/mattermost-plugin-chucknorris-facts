@@ -1,0 +1,41 @@
+name: Publish
+
+on:
+  create:
+    tags:
+    - /^v.*/
+
+jobs:
+  release:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go 1.12
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.12
+      id: go
+
+    - uses: actions/checkout@v1
+
+    - name: Check Style
+      run: make check-style
+
+    - name: Coverage
+      run: make coverage
+
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: server/coverage.txt
+
+    - name: Build
+      run: make dist
+
+    - name: Upload packages to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        file: dist/*.tar.gz
+        tag: ${{ github.event.ref }}
