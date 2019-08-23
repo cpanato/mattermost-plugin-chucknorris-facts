@@ -37,5 +37,6 @@ jobs:
     - name: Upload packages to release
       uses: svenstaro/upload-release-action@v1-release
       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: dist/*.tar.gz
         tag: ${{ github.event.ref }}
