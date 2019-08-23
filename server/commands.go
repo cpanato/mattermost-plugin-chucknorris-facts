@@ -58,26 +58,24 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 		return &model.CommandResponse{}, model.NewAppError("", "", nil, err.Error(), http.StatusInternalServerError)
 	}
 
+	message := ">" + chuckFact.Value
 	if chuckFact.Value == "" {
-		chuckPost := &model.Post{
-			UserId:    p.botUserID,
-			ChannelId: args.ChannelId,
-			Message:   "Looks like even Chuck Norris fail, API server is down or anyother issue",
-		}
-
-		p.createBotPost(chuckPost)
-		return &model.CommandResponse{}, nil
+		message = "Looks like even Chuck Norris fail, API server is down or any other issue that chuck cannot handle."
 	}
 
 	chuckPost := &model.Post{
 		UserId:    p.botUserID,
 		ChannelId: args.ChannelId,
-		Message:   ">" + chuckFact.Value,
+		Message:   message,
 	}
 
-	p.createBotPost(chuckPost)
+	_, errChuckPost := p.createBotPost(chuckPost)
+	if errChuckPost != nil {
+		return &model.CommandResponse{}, model.NewAppError("", "", nil, errChuckPost.Error(), http.StatusInternalServerError)
+	}
 
 	return &model.CommandResponse{}, nil
+
 }
 
 func getCommandResponse(responseType, text string) *model.CommandResponse {
