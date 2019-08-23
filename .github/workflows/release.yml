@@ -1,12 +1,16 @@
-name: PullRequestBuild
-on: [pull_request]
+name: Publish
+
+on:
+  create:
+    tags:
+    - /^v.*/
+
 jobs:
-
-  build:
-    name: PullRequestBuild
+  release:
+    name: Publish
     runs-on: ubuntu-latest
-    steps:
 
+    steps:
     - name: Set up Go 1.12
       uses: actions/setup-go@v1
       with:
@@ -29,3 +33,9 @@ jobs:
 
     - name: Build
       run: make dist
+
+    - name: Upload packages to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        file: dist/*.tar.gz
+        tag: ${{ github.event.ref }}
