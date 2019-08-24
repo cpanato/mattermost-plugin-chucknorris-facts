@@ -34,9 +34,11 @@ jobs:
         file: server/coverage.txt
 
     - name: Build
-      run: make dist
+      run: |
+        make dist
+        cp dist/*.tar.gz com.cpanato.chucknorris-facts.tar.gz
       
     - uses: actions/upload-artifact@master
       with:
         name: com.cpanato.chucknorris-facts.tar.gz
-        path: dist/*.tar.gz
+        path: dist/com.cpanato.chucknorris-facts.tar.gz
