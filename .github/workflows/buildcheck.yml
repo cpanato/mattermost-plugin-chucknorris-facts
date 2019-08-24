@@ -38,5 +38,5 @@ jobs:
       
     - uses: actions/upload-artifact@master
       with:
-        name: com.cpanato.chucknorris-facts-${{ github.event.ref }}.tar.gz
-        path: dist/com.cpanato.chucknorris-facts-${{ github.event.ref }}.tar.gz
+        name: com.cpanato.chucknorris-facts.tar.gz
+        path: dist/*.tar.gz
