@@ -36,7 +36,7 @@ jobs:
     - name: Build
       run: |
         make dist
-        cp dist/*.tar.gz com.cpanato.chucknorris-facts.tar.gz
+        cp dist/*.tar.gz dist/com.cpanato.chucknorris-facts.tar.gz
       
     - uses: actions/upload-artifact@master
       with:
